@@ -1,14 +1,16 @@
+
 const fs = require('fs');// added because we will write 
 const path = require('path');// same above
 
 const express = require('express');
 const PORT = process.env.PORT || 3001;
 const app = express();// instantiate the server
+
 // parse incoming string or array data
 app.use(express.urlencoded({ extended: true }));
 // parse incoming JSON data
 app.use(express.json());
-
+app.use(express.static('public/zookeepr-public/'));// added to make css and js files available
 
 
 const {animals} = require('./data/animals'); // connects with animal.json file in data dir
@@ -113,6 +115,10 @@ app.post('/api/animals', (req, res) => {
       const animal = createNewAnimal(req.body, animals);
       res.json(animal);
     }
+  });
+
+  app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/zookeepr-public/index.html'));
   });
 
 app.listen(PORT,()=>{
