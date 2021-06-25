@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.static('public/zookeepr-public/'));// added to make css and js files available
 
 
-const {animals} = require('./data/animals'); // connects with animal.json file in data dir
+const {animals} = require('./data/animals'); // connects with animal.json filen data dir
 
 
 
@@ -120,6 +120,15 @@ app.post('/api/animals', (req, res) => {
   app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, './public/zookeepr-public/index.html'));
   });
+  app.get('/animals', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/zookeepr-public/animals.html'));
+  });
+  app.get('/zookeepers', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/zookeepr-public/zookeepers.html'));
+  });
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/zookeepr-public/index.html'));
+  }); // wildcard sendfile should come last in all sendfile requests!!
 
 app.listen(PORT,()=>{
     console.log(`API server now on port ${PORT}!`);
